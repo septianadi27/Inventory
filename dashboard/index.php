@@ -260,7 +260,7 @@ $_SESSION['timeout'] = time();
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../stock/"
                                 aria-expanded="false">
-                                <i class="mdi mdi-gauge"></i>
+                                <i class="mdi mdi-dropbox"></i>
                                 <span class="hide-menu">Stock Barang</span>
                             </a>
                         </li>
@@ -271,15 +271,22 @@ $_SESSION['timeout'] = time();
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../brg-masuk/"
                                 aria-expanded="false">
-                                <i class="mdi mdi-gauge"></i>
+                                <i class="mdi mdi-import"></i>
                                 <span class="hide-menu">Barang Masuk</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../brg-keluar/"
                                 aria-expanded="false">
-                                <i class="mdi mdi-gauge"></i>
+                                <i class="mdi mdi-export"></i>
                                 <span class="hide-menu">Barang Keluar</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../vendor/"
+                                aria-expanded="false">
+                                <i class="mdi mdi-cart"></i>
+                                <span class="hide-menu">Vendor</span>
                             </a>
                         </li>
                         <li class="nav-small-cap">
@@ -289,7 +296,7 @@ $_SESSION['timeout'] = time();
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="../user/"
                                 aria-expanded="false">
-                                <i class="mdi mdi-gauge"></i>
+                                <i class="mdi mdi-account-multiple"></i>
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>

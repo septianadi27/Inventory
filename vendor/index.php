@@ -39,19 +39,18 @@ $_SESSION['timeout'] = time();
 
 //Fungsi Update
 if(isset($_POST['update'])){
-    $kode_barang=$_POST['kode_brg'];
-    $kategori=$_POST['kategori'];
-    $nama_barang=$_POST['nama_brg'];
-    $satuan=$_POST['satuan'];
-    $harga=$_POST['harga'];
-    $stock=$_POST['stock'];
+    $kode_vendor=$_POST['kode_vendor'];
+    $nama_vendor=$_POST['nama_vendor'];
+    $alamat=$_POST['alamat'];
+    $int_value = (int) $_POST['contact'];
+    $contact='0'.$int_value;
 
-    $query = mysqli_query($koneksi,"UPDATE `barang` SET `nama_barang` = '$nama_barang', `satuan` = '$satuan', `harga` = $harga, `stock` = $stock WHERE `barang`.`kode_barang` = '$kode_barang'");
+    $query = mysqli_query($koneksi,"UPDATE `vendor` SET `nama_vendor` = '$nama_vendor', `alamat` = '$alamat', `contact` = '$contact' WHERE `vendor`.`kode_vendor` = '$kode_vendor'");
 
     if ($query){
-        header("Location:../stock/");
+        header("Location:../vendor/");
     } else {
-        header("Location:../stock/");
+        header("Location:../vendor/");
     }
 }
 ?>
@@ -64,7 +63,7 @@ if(isset($_POST['update'])){
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../dist/assets/images/favicon.ico">
-    <title>Daftar Barang - Amartha Inventory</title>
+    <title>Daftar Vendor - Amartha Inventory</title>
 	<link rel="canonical" href="https://www.wrappixel.com/templates/xtremeadmin/" />
     <link href="../dist/assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
     <link href="../dist/js/pages/chartist/chartist-init.css" rel="stylesheet">
@@ -351,10 +350,10 @@ if(isset($_POST['update'])){
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 col-12 align-self-center">
-                    <h3 class="text-themecolor mb-0">Daftar Barang</h3>
+                    <h3 class="text-themecolor mb-0">Daftar Vendor</h3>
                     <ol class="breadcrumb mb-0 p-0 bg-transparent">
                         <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Stock Barang</li>
+                        <li class="breadcrumb-item active">Vendor</li>
                     </ol>
                 </div>
                 <div class="col-md-7 col-12 align-self-center d-none d-md-block">
@@ -391,11 +390,11 @@ if(isset($_POST['update'])){
                         <div class="card card-body">
                             <div class="row">
                                     <div class="col-md-4">
-                                        <h3 class="card-title">Data Daftar Barang</h3>
+                                        <h3 class="card-title">Data Daftar Vendor</h3>
                                     </div>
                                     <div class="col-md-8 text-right d-flex justify-content-md-end justify-content-center mt-3 mt-md-0">
                                             <button type="button" data-toggle="modal" data-target="#add-modal"
-                                            id="btn-add-contact" class="btn btn-info"><i class="fas fa-plus-square font-16 mr-1"></i> Tambah Barang</button>
+                                            id="btn-add-contact" class="btn btn-info"><i class="fas fa-plus-square font-16 mr-1"></i> Tambah Vendor</button>
                                     </div>
                             </div>
                         </div>
@@ -407,47 +406,43 @@ if(isset($_POST['update'])){
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode Barang</th>
-                                                <th>Kategori</th>
-                                                <th>Nama Barang</th>
-                                                <th>Satuan</th>
-                                                <th>Harga</th>
-                                                <th>Stock</th>
+                                                <th>Kode Vendor</th>
+                                                <th>Nama Vendor</th>
+                                                <th>Alamat</th>
+                                                <th>Contact</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $no=1;
-                                            $query = "SELECT * FROM barang";
+                                            $query = "SELECT * FROM vendor";
                                             $tampil = mysqli_query($koneksi, $query);
                                             while ($data = mysqli_fetch_array($tampil)) {;?>
                                             <tr>
                                                 <td><?php echo $no++; ?></td>
-                                                <td><?php echo $data['kode_barang']; ?></td>
-                                                <td><?php echo $data['kategori']; ?></td>
-                                                <td><?php echo $data['nama_barang']; ?></td>
-                                                <td><?php echo $data['satuan']; ?></td>
-                                                <td><?php echo $data['harga']; ?></td>
-                                                <td><?php echo $data['stock']; ?></td>
+                                                <td><?php echo $data['kode_vendor']; ?></td>
+                                                <td><?php echo $data['nama_vendor']; ?></td>
+                                                <td><?php echo $data['alamat']; ?></td>
+                                                <td><a href="https://api.whatsapp.com/send?phone=62<?php echo $data['contact']; ?>"target="_blank"><?php echo $data['contact']; ?></a></td>
                                                 <td><div class="btn-group" role="group">
                                                     <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="mdi mdi-settings font-18 "></i>
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                                        <button type="button" data-toggle="modal" data-target="#edit<?=$data['kode_barang'];?>" class="dropdown-item">Edit</button>
-                                                        <a class="dropdown-item" id="btn-hapus" href="del-stock.php?kode=<?php echo $data['kode_barang']; ?>">Delete</a>
+                                                        <button type="button" data-toggle="modal" data-target="#edit<?=$data['kode_vendor'];?>" class="dropdown-item">Edit</button>
+                                                        <a class="dropdown-item" id="btn-hapus" href="del-vendor.php?kode=<?php echo $data['kode_vendor']; ?>">Delete</a>
                                                     </div></div>
                                                 </td>
                                             </tr>
 
                                             <!-- Edit Modal -->
-                                            <div id="edit<?=$data['kode_barang'];?>" class="modal fade" tabindex="-1" role="dialog"
+                                            <div id="edit<?=$data['kode_vendor'];?>" class="modal fade" tabindex="-1" role="dialog"
                                                 aria-labelledby="edit-modalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-scrollable" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header modal-colored-header bg-info">
-                                                            <h4 class="modal-title text-white" id="edit-modalLabel">Edit Barang <?php echo $data['kategori'];?> - <?php echo $data['nama_barang'];?></h4>
+                                                            <h4 class="modal-title text-white" id="edit-modalLabel">Edit Vendor <?php echo $data['nama_vendor'];?> - <?php echo $data['contact'];?></h4>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                 aria-hidden="true">×</button>
                                                         </div>
@@ -455,49 +450,30 @@ if(isset($_POST['update'])){
                                                             <div class="modal-body">
                                                                 <div class="card-body">
                                                                     <div class="form-group row d-none">
-                                                                        <label for="kode_brg" class="col-sm-3 text-right control-label col-form-label">Kode Barang</label>
+                                                                        <label for="kode_vendor" class="col-sm-3 text-right control-label col-form-label">Kode kode_vendor</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="kode_brg" name="kode_brg" placeholder="Masukkan Kode Barang" value="<?php echo $data['kode_barang']; ?>" required>
+                                                                            <input type="text" class="form-control" id="kode_vendor" name="kode_vendor" placeholder="Masukkan Kode Vendor" value="<?php echo $data['kode_vendor']; ?>" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-sm-3 text-right control-label col-form-label">Kategori</label>
+                                                                        <label for="nama_vendor" class="col-sm-3 text-right control-label col-form-label">Nama Vendor</label>
                                                                         <div class="col-sm-9">
-                                                                            <select name="kategori" class="form-control" disabled>
-                                                                                <option <?php if($data['kategori']=='Logistik'){echo 'Selected';} ?> >Logistik</option>
-                                                                                <option <?php if($data['kategori']=='IT'){echo 'Selected';} ?> >IT</option>
-                                                                            </select>
+                                                                            <input type="text" class="form-control" id="nama_vendor" name="nama_vendor" placeholder="Masukkan Nama Vendor" value="<?php echo $data['nama_vendor']; ?>" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label for="nama_brg" class="col-sm-3 text-right control-label col-form-label">Nama Barang</label>
+                                                                        <label for="alamat" class="col-sm-3 text-right control-label col-form-label">Alamat</label>
                                                                         <div class="col-sm-9">
-                                                                            <input type="text" class="form-control" id="nama_brg" name="nama_brg" placeholder="Masukkan Nama Barang" value="<?php echo $data['nama_barang']; ?>" required>
+                                                                            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Vendor" value="<?php echo $data['alamat']; ?>" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row">
-                                                                        <label class="col-sm-3 text-right control-label col-form-label">Satuan</label>
-                                                                        <div class="col-sm-9">
-                                                                            <select name="satuan" class="form-control">
-                                                                                <option <?php if($data['satuan']=='Pcs'){echo 'Selected';} ?> >Pcs</option>
-                                                                                <option <?php if($data['satuan']=='Rim'){echo 'Selected';} ?> >Rim</option>
-                                                                                <option <?php if($data['satuan']=='Pack'){echo 'Selected';} ?> >Pack</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label class="col-sm-3 text-right control-label col-form-label">Harga</label>
+                                                                        <label class="col-sm-3 control-label">Nomor Whatsapp</label>
                                                                         <div class="col-sm-9">
                                                                             <div class="input-group">
-                                                                                <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
-                                                                                <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga" value="<?php echo $data['harga']; ?>" readonly>
+                                                                                <div class="input-group-prepend"><span class="input-group-text">+62</span></div>
+                                                                                <input type="number" class="form-control" id="contact" name="contact" placeholder="Masukkan Contact" value="<?php echo (int) $data['contact']; ?>" required>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="abpro" class="col-sm-3 text-right control-label col-form-label">Stock Awal</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Masukkan Stock Awal" value="<?php echo $data['stock']; ?>" readonly>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -517,12 +493,10 @@ if(isset($_POST['update'])){
                                         <tfoot>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Kode Barang</th>
-                                                <th>Kategori</th>
-                                                <th>Nama Barang</th>
-                                                <th>Satuan</th>
-                                                <th>Harga</th>
-                                                <th>Stock</th>
+                                                <th>Kode Vendor</th>
+                                                <th>Nama Vendor</th>
+                                                <th>Alamat</th>
+                                                <th>Contact</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>
@@ -542,55 +516,28 @@ if(isset($_POST['update'])){
                                 <button type="button" class="close" data-dismiss="modal"
                                     aria-hidden="true">×</button>
                             </div>
-                            <form class="form-horizontal" action="add-stock.php" method="post">
+                            <form class="form-horizontal" action="add-vendor.php" method="post">
                                 <div class="modal-body">
                                     <div class="card-body">
-                                        <!-- <div class="form-group row">
-                                            <label for="kode_brg" class="col-sm-3 text-right control-label col-form-label">Kode Barang</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="kode_brg" name="kode_brg" placeholder="Masukkan Kode Barang" required>
-                                            </div>
-                                        </div> -->
                                         <div class="form-group row">
-                                            <label class="col-sm-3 text-right control-label col-form-label">Kategori</label>
+                                            <label for="nama_vendor" class="col-sm-3 text-right control-label col-form-label">Nama Vendor</label>
                                             <div class="col-sm-9">
-                                                <select name="kategori" class="form-control">
-                                                    <option>-</option>
-                                                    <option>Logistik</option>
-                                                    <option>IT</option>
-                                                </select>
+                                                <input type="text" class="form-control" id="nama_vendor" name="nama_vendor" placeholder="Masukkan Nama Vendor" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="nama_brg" class="col-sm-3 text-right control-label col-form-label">Nama Barang</label>
+                                            <label for="alamat_vendor" class="col-sm-3 text-right control-label col-form-label">Alamat Vendor</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="nama_brg" name="nama_brg" placeholder="Masukkan Nama Barang" required>
+                                                <input type="text" class="form-control" id="alamat_vendor" name="alamat_vendor" placeholder="Masukkan Alamat Vendor" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 text-right control-label col-form-label">Satuan</label>
-                                            <div class="col-sm-9">
-                                                <select name="satuan" class="form-control">
-                                                    <option>-</option>
-                                                    <option>Pcs</option>
-                                                    <option>Rim</option>
-                                                    <option>Pack</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 text-right control-label col-form-label">Harga</label>
+                                            <label class="col-sm-3 control-label">Nomor Whatsapp</label>
                                             <div class="col-sm-9">
                                                 <div class="input-group">
-                                                    <div class="input-group-prepend"><span class="input-group-text">Rp.</span></div>
-                                                    <input type="number" class="form-control" id="harga" name="harga" placeholder="Masukkan Harga" required>
+                                                    <div class="input-group-prepend"><span class="input-group-text">+62</span></div>
+                                                    <input type="number" class="form-control" id="contact" name="contact" placeholder="Masukkan Contact" required>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="abpro" class="col-sm-3 text-right control-label col-form-label">Stock Awal</label>
-                                            <div class="col-sm-9">
-                                                <input type="number" class="form-control" id="stock" name="stock" placeholder="Masukkan Stock Awal" required>
                                             </div>
                                         </div>
                                     </div>
